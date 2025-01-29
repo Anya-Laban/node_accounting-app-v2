@@ -29,27 +29,27 @@ const create = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const user = usersService.getById(req.params.userId);
+  const user = await usersService.getById(req.params.userId);
 
   if (!user) {
     return res.sendStatus(404);
   }
 
-  const deletedUser = await usersService.deleteById(req.params.userId);
+  await usersService.deleteById(req.params.userId);
 
-  res.status(204).json(deletedUser);
+  res.status(204).end();
 };
 
 const update = async (req, res) => {
   const { name } = req.body;
 
-  const user = usersService.getById(req.params.userId);
+  const user = await usersService.getById(req.params.userId);
 
   if (!user) {
     return res.sendStatus(404);
   }
 
-  const updatedUser = usersService.update({
+  const updatedUser = await usersService.update({
     id: req.params.userId,
     name,
   });

@@ -44,20 +44,20 @@ const create = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const expense = expensesService.getById(req.params.expenseId);
+  const expense = await expensesService.getById(req.params.expenseId);
 
   if (!expense) {
     return res.sendStatus(404);
   }
 
-  const deletedExpense = await expensesService.deleteById(req.params.expenseId);
+  await expensesService.deleteById(req.params.expenseId);
 
-  res.status(204).json(deletedExpense);
+  res.status(204).end();
 };
 
 const update = async (req, res) => {
   const { userId, spentAt, title, amount, category, note } = req.body;
-  const expense = expensesService.getById(req.params.expenseId);
+  const expense = await expensesService.getById(req.params.expenseId);
 
   if (!expense) {
     return res.sendStatus(404);
